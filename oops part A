@@ -1,0 +1,765 @@
+part -A
+Q1
+/Java Program to demonstrate the real scenario of Java Method Overriding 
+//where three classes are overriding the method of a parent class. 
+//Creating a parent class. 
+class Bank{ 
+int getRateOfInterest(){return 0;} 
+} 
+//Creating child classes. 
+class SBI extends Bank{ 
+int getRateOfInterest(){return 8;} 
+} 
+Page 2 of 32
+ 
+class ICICI extends Bank{ 
+int getRateOfInterest(){return 7;} 
+} 
+class AXIS extends Bank{ 
+int getRateOfInterest(){return 9;} 
+} 
+//Test class to create objects and call the methods 
+class BankDetails{ 
+public static void main(String args[]){ 
+SBI s=new SBI(); 
+ICICI i=new ICICI(); 
+AXIS a=new AXIS(); 
+System.out.println("SBI Rate of Interest: "+s.getRateOfInterest()); 
+System.out.println("ICICI Rate of Interest: "+i.getRateOfInterest()); 
+System.out.println("AXIS Rate of Interest: "+a.getRateOfInterest()); 
+} 
+}
+Q2
+import java.util.*;
+abstract class Vehicle
+{
+ boolean hashelmet;
+ int yom;
+ abstract void getData();
+ abstract void putData();
+ 
+Page 3 of 32
+ Vehicle(boolean h,int n)
+ {
+ hashelmet=h;
+ yom=n;
+ }
+}
+class TwoWheeler extends Vehicle
+{ 
+ private String Brand;
+ protected int Cost;
+ String EngineType;
+ public String Color;
+ 
+ TwoWheeler(int n)
+ {
+ super(true,n);
+ }
+ 
+ void getData()
+ { 
+ Scanner sc=new Scanner(System.in);
+ System.out.println("Enter Two Wheeler details: Its Brand name,Cost,EngineType 
+and Colour");
+ Brand=sc.next();
+ Cost=sc.nextInt();
+ EngineType=sc.next();
+ Color=sc.next();
+ }
+ 
+ void putData()
+ {
+ System.out.println("\n");
+System.out.println("The details of Two Wheeler");
+System.out.println("Brand:"+Brand+"\nCost:"+Cost+"\nEngineType:"+EngineTy
+pe+"\nColor:"+Color+"\nYear of Manufacture:"+yom+"\nHas helmet:"+hashelmet);
+ }
+}
+final class FourWheeler extends Vehicle
+{
+ FourWheeler(int n)
+ {
+ super(false,n);
+Page 4 of 32
+ }
+ 
+ void getData()
+ {
+ 
+ }
+ 
+ void putData()
+ {
+ System.out.println("\n");
+System.out.println("The details of Four Wheeler");
+ System.out.println("Year of Manufacture:"+yom+"\nHas helmet:"+hashelmet);
+ }
+}
+/*class A extends FourWheeler
+{
+ A()
+ {
+ super(5);
+ }
+}
+*/
+public class Program1
+{
+public static void main(String[] args) 
+{
+//Vehicle v=new Vehicle();
+//Cannot Create instance of an abstract class
+TwoWheeler t1=new TwoWheeler(1995);
+ FourWheeler f1=new FourWheeler(2006);
+ 
+t1.getData();
+ t1.putData();
+ f1.putData();
+}
+}
+
+Q3
+abstract class Shape
+{
+ String color;
+ boolean filled;
+ abstract double getArea();
+ 
+ Shape()
+ {
+ color="green";
+ filled=true;
+ }
+ 
+ Shape(String c,boolean f)
+ {
+ color=c;
+ filled=f;
+ }
+ 
+ boolean isFILLED()
+ {
+ return filled;
+ }
+ 
+ String getColor()
+ {
+ return color;
+ }
+ 
+ void setFILLED(boolean b)
+ {
+ this.filled=b;
+ }
+ 
+ void setColor(String c)
+ {
+ this.color=c;
+ }
+ 
+Page 6 of 32
+ public String toString()
+ {
+ if(this.filled==false)
+ return "A Shape with color " +this.color+" and not filled";
+ else 
+ return "A Shape with color " +this.color+" and filled";
+ }
+}
+class Circle extends Shape
+{
+ int r;
+ 
+ Circle(int r1)
+ { super();
+ r=r1;
+ }
+ 
+ Circle(String c,boolean f,int r1)
+ { super(c,f);
+ r=r1;
+ }
+ 
+ double getArea()
+ {
+ return 3.14*r*r;
+ }
+ 
+ void display()
+ {
+ System.out.println("\nDisplaying the details of Circle:");
+ System.out.println(isFILLED());
+ System.out.println(getColor());
+ System.out.println("\n");
+ }
+ 
+ void change(String c,boolean b)
+ {
+ setColor(c);
+ setFILLED(b);
+ }
+}
+final class Rectangle extends Shape
+{
+ int a,b;
+ 
+ Rectangle(int a1,int b1)
+ { super();
+ a=a1;
+ b=b1;
+ }
+ 
+ Rectangle(String c,boolean f,int a1,int b1)
+ { super(c,f);
+Page 7 of 32
+ a=a1;
+ b=b1;
+ }
+ 
+ double getArea()
+ {
+ return a*b;
+ }
+}
+/*class Square extends Rectangle
+{ Square()
+ {
+ super(5,6);
+ }
+ void display()
+ { 
+ System.out.println(a + " " + b);
+ }
+}
+Cannot inherit a final class
+*/
+public class Program2
+{
+public static void main(String[] args) 
+ {
+/*Shape s=new Shape();
+Cannot create instance of an abstact class*/
+ Circle c=new Circle("blue",false,5);
+Rectangle r=new Rectangle("red",true,2,4);
+ System.out.println(c);
+System.out.println(r);
+ System.out.println("\n");
+ System.out.println("Area of Circle:"+c.getArea());
+System.out.println("Area of Rectangle:"+r.getArea());
+ 
+ c.display();
+ 
+ c.change("brown",true);
+ 
+ c.display();
+}
+}
+Q4
+import java.util.*;
+abstract class Student
+{
+ private String Name;
+ protected int ID;
+ double grade;
+ public int age;
+ abstract boolean isPassed(double Grade);
+ final void setter(String name)
+ {
+ Name=name;
+ }
+ 
+ String getter()
+ {
+ return Name;
+ }
+}
+class Undergrad extends Student
+{
+ void getData()
+ { 
+ Scanner sc=new Scanner(System.in);
+ System.out.println("\nEnter Name,ID,age");
+ setter(sc.next());
+ ID=sc.nextInt();
+ age=sc.nextInt();
+ }
+ boolean isPassed(double Grade)
+ {
+ grade=Grade;
+ if(grade<=70)
+ return false;
+ else 
+ return true;
+ }
+ void display()
+ {
+ System.out.println("Name:"+getter()+"\nAge:"+age+"\nID:"+ID);
+ }
+ 
+ /*void setter(String name)
+ {
+ }
+ Cannot override the final setter method*/
+}
+class Grad extends Student
+{
+ void getData()
+ { 
+ Scanner sc=new Scanner(System.in);
+ System.out.println("\nEnter Name,ID,age");
+ setter(sc.next());
+ ID=sc.nextInt();
+ age=sc.nextInt();
+ }
+ 
+ boolean isPassed(double Grade)
+ {
+ grade=Grade;
+ if(grade<=80)
+ return false;
+ else 
+ return true;
+ }
+ 
+ void display()
+ {
+ System.out.println("Name:"+getter()+"\nAge:"+age+"\nID:"+ID);
+ }
+}
+public class Program3
+{
+Page 10 of 32
+public static void main(String[] args) 
+ {
+Undergrad u=new Undergrad();
+u.getData();
+ if(u.isPassed(65))
+ System.out.println("Student has passed\n");
+ else 
+ System.out.println("Student has failed\n");
+ 
+ u.display();
+ 
+ Grad g=new Grad();
+ g.getData();
+ 
+if(g.isPassed(90))
+ System.out.println("Student has passed\n");
+ else 
+ System.out.println("Student has failed\n");
+ g.display();
+}
+}
+Q5
+
+class Car
+{
+int speed;
+ double regularPrice;
+ String color;
+ Car(int s,double price,String c)
+ {
+ speed=s;
+ regularPrice=price;
+ color=c;
+ }
+ 
+double getSalePrice()
+ {
+ return regularPrice;
+ }
+}
+class Truck extends Car
+{ 
+int weight;
+ Truck(int s,double price,String c,int w)
+ {
+ super(s,price,c);
+ weight=w;
+ }
+ 
+double getSalePrice()
+ {
+ if(weight>2000)
+ { 
+regularPrice=regularPrice*0.9;
+ return regularPrice;
+ }
+ else
+ { 
+regularPrice=regularPrice*0.8;
+ return regularPrice;
+ }
+ }
+}
+Page 12 of 32
+class Ford extends Car
+{ 
+int manufacturerDiscount,year;
+ 
+Ford(int s,double price,String c,int m)
+ {
+ super(s,price,c);
+ manufacturerDiscount=m;
+ }
+ 
+double getSalePrice()
+ {
+ regularPrice-=manufacturerDiscount;
+ return regularPrice;
+ }
+}
+class Sedan extends Car
+{ 
+int length;
+ 
+Sedan(int s,double price,String c,int l)
+ {
+ super(s,price,c);
+ length=l;
+ }
+ 
+double getSalePrice()
+ {
+ if(length>20)
+ { 
+regularPrice=regularPrice*0.95;
+ return regularPrice;
+ }
+ else
+ { 
+regularPrice=regularPrice*0.9;
+ return regularPrice;
+ }
+ }
+}
+public class Program4
+Page 13 of 32
+{
+public static void main(String[] args) 
+{
+Truck t=new Truck(65,2500000,"Red",3000);
+ System.out.println("Price of truck is "+t.getSalePrice());
+ Car c = new Car(100,800000,"Black");
+ System.out.println("Price of Car is "+c.getSalePrice());
+ Ford f=new Ford(120,2200000,"Yellow",120000);
+ System.out.println("Price of ford is "+f.getSalePrice());
+ Sedan s= new Sedan(100,3500000,"Blue",22);
+ System.out.println("Price of Sedan is "+s.getSalePrice());
+}
+}
+
+Q6
+
+class SavingsAccount
+{
+ static int annualInterestRate;
+ private double savingsBalance;
+ 
+SavingsAccount(double s)
+ {
+ savingsBalance=s;
+ }
+ 
+static void modifyInterestRate(int x)
+ {
+ annualInterestRate=x;
+ }
+ 
+Page 14 of 32
+void calculateMonthlyInterest()
+ {
+ double d=(savingsBalance*annualInterestRate)/12;
+ savingsBalance=savingsBalance+d;
+ }
+ 
+void display()
+ {
+ System.out.println(savingsBalance);
+ }
+}
+public class Program5
+{
+public static void main(String[] args) 
+{
+SavingsAccount saver1=new SavingsAccount(2000);
+SavingsAccount saver2=new SavingsAccount(3000);
+SavingsAccount.modifyInterestRate(4);
+saver1.calculateMonthlyInterest();
+saver2.calculateMonthlyInterest();
+saver1.display();
+saver2.display();
+SavingsAccount.modifyInterestRate(5);
+saver1.calculateMonthlyInterest();
+saver2.calculateMonthlyInterest();
+saver1.display();
+saver2.display();
+}
+}
+
+Q7
+
+class Customer
+{
+ private int ID;
+ private String Name;
+ private int discount;
+ Customer(int ID,String Name,int discount)
+ {
+ this.Name=Name;
+ this.ID=ID;
+ this.discount=discount;
+ }
+ int getID()
+ {
+ return ID;
+ }
+ String getName()
+ {
+ return Name;
+ }
+ int getDiscount()
+ {
+ return discount;
+ }
+ void setDiscount(int discount)
+ {
+ this.discount=discount;
+ }
+Page 16 of 32
+ public String toString()
+ {
+ return Name+"("+ID+")";
+ }
+}
+class Invoice
+{
+ private int ID;
+ private Customer customer;
+ private double amount;
+ Invoice(int ID,Customer customer,double amount)
+ {
+ this.ID=ID;
+ this.customer=customer;
+ this.amount=amount;
+ }
+ int getID()
+ {
+ return ID;
+ }
+ Customer getCustomer()
+ {
+ return customer;
+ }
+ void setCustomer(Customer customer)
+ {
+ this.customer=customer;
+ }
+ String getAmount()
+ {
+ return Double.toString(amount);
+ }
+ void setAmount(double amount)
+ {
+ this.amount=amount;
+ }
+Page 17 of 32
+ String getCustomerName()
+ {
+ return customer.getName();
+ }
+ double getAmountAfterDiscount()
+ {
+ return (amount*customer.getDiscount())/100;
+ }
+}
+public class Program6
+{
+public static void main(String[] args)
+ {
+ Customer c=new Customer(25,"Raju",5);
+ System.out.println("The details of first customer:");
+ System.out.println(c.getID());
+ System.out.println(c.getDiscount());
+ System.out.println(c.getName());
+ c.setDiscount(7);
+ System.out.println("After discount:");
+ System.out.println(c.getDiscount());
+ System.out.println(c);
+ Customer c1=new Customer(26,"Ram",9);
+ Invoice i=new Invoice(28,c1,60000);
+ System.out.println("\nInvoice details:");
+ System.out.println(i.getID());
+ System.out.println(i.getCustomer());
+ System.out.println(i.getAmount());
+ i.setAmount(70000);
+ System.out.println(i.getAmount());
+ System.out.println(i.getCustomerName());
+ System.out.println(i.getAmountAfterDiscount());
+}
+}
+
+Q8
+
+class Person {
+    private String name;
+    private String address;
+    Person (String name, String address)
+    
+   {
+    this.name = name;
+    this.address = address;
+    
+   }
+    String getName ()
+    
+   {
+    return name;
+    
+   }
+    String getAddress ()
+    
+   {
+    return address;
+    
+   }
+    void setAddress (String address)
+    
+   {
+    this.address = address;
+    
+   }
+    public String toString ()
+    
+   {
+    return name + "(" + address + ")";
+    
+   }
+   }
+   Page 19 of 32
+   class Student1 extends Person
+   {
+    int numCourses = 0;
+    String courses[] = new String[30];
+    int grades[] = new int[30];
+    Student1 (String name, String address)
+    {
+    super (name, address);
+    }
+    void addCourseGrade (String course, int grade)
+    {
+    if (numCourses <= 29)
+    {
+   courses[numCourses] = course;
+   grades[numCourses] = grade;
+   numCourses++;
+    }
+    else
+    {
+   System.out.println ("Maximum number of courses");
+    }
+    }
+    void printGrades ()
+    {
+    for (int i = 0; i < numCourses; i++)
+    System.out.println ("Course:" + courses[i] + " Grade:" + grades[i]);
+    }
+    double getAverageGrades ()
+    {
+    double d = 0;
+    for (int i = 0; i < numCourses; i++)
+    d = d + grades[i];
+    d = d / numCourses;
+    return d;
+    }
+    public String toString ()
+    {
+    return getName () + "(" + getAddress () + ")";
+    }
+   }
+   class Teacher extends Person
+   {
+    int numCourses = 0;
+   Page 20 of 32
+    String courses[] = new String[5];
+    Teacher(String name, String address)
+    {
+    super (name, address);
+    }
+    boolean addCourse (String course)
+    {
+    if (numCourses <= 4)
+    {
+   for (int i = 0; i < numCourses; i++)
+    if (courses[i].equals (course))
+    return false;
+   courses[numCourses] = course;
+   numCourses++;
+   return true;
+    }
+    else
+    return false;
+    }
+    boolean removeCourse (String course)
+    {
+    if (numCourses != 0)
+    {
+    for (int i = 0; i < numCourses; i++)
+    if (courses[i].equals (course))
+    {
+    courses[i] = " ";
+    return true;
+    }
+    return false;
+    }
+    return false;
+    }
+   public String toString ()
+   {
+    return getName () + "(" + getAddress () + ")";}
+   }
+   public class Program7
+   {
+   public static void main (String[]args)
+    {
+    Student1 s = new Student1("Raju", "Bangalore");
+    System.out.println (s);
+    s.addCourseGrade ("Maths", 85);
+   Page 21 of 32
+    s.addCourseGrade ("OOPS", 80);
+    s.addCourseGrade ("DS",75); 
+    s.addCourseGrade ("DMS", 70);
+    s.printGrades();
+    System.out.println(s.getAverageGrades());
+    Teacher t=new Teacher("CC","DD");
+    if(t.addCourse("Maths"))
+    System.out.println("Course added");
+    else
+    System.out.println("Max limit reached/course already exists");
+    if(t.addCourse("Maths"))
+    System.out.println("Course added");
+    else
+    System.out.println("Max limit reached/course already exists");
+    if(t.addCourse("OOPS"))
+    System.out.println("Course added");
+    else
+    System.out.println("Max limit reached/course already exists");
+    if(t.addCourse("DS"))
+    System.out.println("Course added");
+    else
+    System.out.println("Max limit reached/course already exists");
+    if(t.removeCourse("Maths"))
+    System.out.println("Course removed");
+    else
+    System.out.println("Zero courses/course does not exist");
+    if(t.removeCourse("TOC"))
+    System.out.println("Course removed");
+    else
+    System.out.println("Zero courses/course does not exist");
+    }
+   }
+
+   
+
+   
