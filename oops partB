@@ -1,0 +1,412 @@
+Q1
+
+interface stackop
+{
+ void push(int item);
+ int pop();
+}
+class FixedStack implements stackop
+{
+ private int stk[ ];
+ private int tos;
+ FixedStack(int size)
+ {
+ stk=new int[size];
+ tos=-1;
+ }
+ public void push(int item)
+ {
+ if(tos==stk.length-1)
+ {
+ System.out.println("Stack Overflows");
+ int t[ ]=new int[stk.length * 2];
+ for(int i=0;i<stk.length;i++)
+ t[i]=stk[i];
+ stk=t;
+ stk[++tos]=item;
+ }
+ else
+ stk[++tos]=item;
+ }
+ public int pop()
+ {
+ if(tos<0)
+ {
+ System.out.println("Stack Underflows");
+ return 0;
+Page 23 of 32
+ }
+ else
+ return stk[tos--];
+ }
+}
+class DynStack implements stackop
+{
+ private int stk[ ];
+ private int tos;
+ DynStack(int size)
+ {
+ stk=new int[size];
+ tos=-1;
+ }
+ public void push(int item)
+ {
+ if(tos==stk.length-1)
+ {
+ System.out.println("Stack Overflows.");
+ int t[ ]=new int[stk.length * 2];
+ for(int i=0;i<stk.length;i++)
+ t[i]=stk[i];
+ stk=t;
+ stk[++tos]=item;
+ }
+ else
+ stk[++tos]=item;
+ }
+ public int pop()
+ {
+ if(tos<0)
+ {
+ System.out.println("Stack Underflows.");
+ return 0;
+Page 24 of 32
+ }
+ else
+ return stk[tos--];
+ }
+}
+class StackTest
+{
+ public static void main(String args[ ])
+ {
+ FixedStack fs=new FixedStack(3);
+ DynStack ds=new DynStack(5);
+ stackop mystk;
+ for(int i=0;i<3;i++)
+ fs.push(i);
+ System.out.println("Fixed length Stack Contents are.");
+ for(int i=0;i<3;i++)
+ System.out.println(fs.pop());
+ for(int i=0;i<7;i++)
+ ds.push(i);
+ System.out.println("Dynamic length Stack Contents are");
+ for(int i=0;i<7;i++)
+ System.out.println(ds.pop());
+ mystk=fs;
+ for(int i=0;i<3;i++)
+ mystk.push(i);
+ System.out.println("Fixed length Stack Contents using interface reference");
+ for(int i=0;i<3;i++)
+ System.out.println(mystk.pop());
+ mystk=ds;
+ for(int i=0;i<7;i++)
+ mystk.push(i);
+ System.out.println("Dynamic length Stack Contents using interface reference");
+ for(int i=0;i<7;i++)
+ System.out.println(mystk.pop());
+ }
+}
+
+Q2
+
+
+package p1;
+public class TwoDim 
+{
+private int x;
+private int y;
+public TwoDim() 
+{
+this.x = 0;
+this.y = 0;
+}
+public TwoDim(int x, int y) 
+{
+this.x = x;
+this.y = y;
+}
+@Override
+public String toString() 
+{
+return "Coordinate: x = " + x + " y = " + y;
+}
+}
+Create a sub directory named p2 under current working directory and create a java program 
+containing class ThreeDim and save as ThreeDim.java
+package p2;
+Page 26 of 32
+import p1.*;
+public class ThreeDim extends TwoDim 
+{
+private int z;
+public ThreeDim()
+{
+super(0, 0);
+this.z = 0;
+}
+public ThreeDim(int x, int y, int z) 
+{
+super(x, y);
+this.z = z;
+}
+@Override
+public String toString() 
+{
+return super.toString() + " z = " + z;
+}
+}
+
+In package.demo
+
+import p1.*;
+import p2.*;
+public class PkgDemo
+{
+public static void main(String[] args) 
+{
+TwoDim td = new TwoDim(1, 2);
+System.out.println(td);
+ThreeDim thd = new ThreeDim(3, 4, 5);
+System.out.println(thd);
+}
+}
+To Execute follow the below steps:
+(i)Compile the file of package p1 and p2 using the below command in current working directory 
+to create class files of TwoDim.java and ThreeDim.java
+javac -classpath . p1/TwoDim.java
+Page 27 of 32
+javac -classpath . p2/ThreeDim.java
+(ii) Compile the source file PkgDemo.java and run the same:
+javac PkgDemo.java
+java PkgDemo
+Coordinate: x = 1 y = 2
+Coordinate: x = 3 y = 4 z = 5
+
+
+Q3
+
+class A extends Thread
+{ public void run()
+{ boolean flag=false;
+int c=0,i=0;
+while(c<3)
+{
+if(i%2!=0)
+{ System.out.println(i);
+c++;
+}
+i++;
+if(c==3)
+{ flag=true;
+break;
+}
+}
+if(flag)
+{
+try {
+wait();
+}
+catch(Exception e)
+{}
+}
+}
+}
+class B extends Thread
+{ int n;
+B(int n)
+{
+this.n=n;
+}
+Page 28 of 32
+public void run()
+{ int reversed = 0;
+ while(n != 0) {
+ int digit = n % 10;
+ reversed = reversed * 10 + digit;
+ n /= 10;
+ }
+ System.out.println("Reversed Number: " + reversed);
+}
+}
+public class Program1 {
+public static void main(String[] args) {
+A a=new A();
+a.start();
+B b=new B(1234);
+b.start();
+}
+}
+
+Q4
+
+/ importing necessary libraries 
+import java.awt.*; 
+import java.awt.event.*; 
+// Our class extends Frame class and implements ActionListener interface 
+public class Program2 extends Frame implements ActionListener { 
+ // creating instances of TextField and Button class 
+ TextField tf1, tf2, tf3; 
+ Button b1, b2; 
+ // instantiating using constructor 
+ Program2() { 
+ // instantiating objects of text field and button 
+ // setting position of components in frame 
+ tf1 = new TextField(); 
+ tf1.setBounds(50, 50, 150, 20); 
+ tf2 = new TextField(); 
+ tf2.setBounds(50, 100, 150, 20); 
+Page 29 of 32
+ tf3 = new TextField(); 
+ tf3.setBounds(50, 150, 150, 20); 
+ tf3.setEditable(false); 
+ b1 = new Button("+"); 
+ b1.setBounds(50, 200, 50, 50); 
+ b2 = new Button("-"); 
+ b2.setBounds(120,200,50,50); 
+ // adding action listener 
+ b1.addActionListener(this); 
+ b2.addActionListener(this); 
+ // adding components to frame 
+ add(tf1); 
+ add(tf2); 
+ add(tf3); 
+ add(b1); 
+ add(b2); 
+ // setting size, layout and visibility of frame 
+ setSize(300,300); 
+ setLayout(null); 
+ setVisible(true); 
+ } 
+ // defining the actionPerformed method to generate an event on buttons 
+ public void actionPerformed(ActionEvent e) { 
+ String s1 = tf1.getText(); 
+ String s2 = tf2.getText(); 
+ int a = Integer.parseInt(s1); 
+ int b = Integer.parseInt(s2); 
+ int c = 0; 
+ if (e.getSource() == b1){ 
+ c = a + b; 
+ } 
+ else if (e.getSource() == b2){ 
+ c = a - b; 
+ } 
+ String result = String.valueOf(c); 
+ tf3.setText(result); 
+ } 
+// main method 
+public static void main(String[] args) { 
+ new Program2(); 
+} 
+}
+Q5
+
+import java.util.*;
+class Triangle extends Exception
+{
+public String toString()
+{
+return "Not an acceptable triangle";
+}
+}
+public class Program4
+{
+public static void main(String args[])throws Triangle
+{ Scanner sc=new Scanner(System.in);
+int a,b,c;
+System.out.println("Enter the 3 sides of a triangle:");
+a=sc.nextInt();
+b=sc.nextInt();
+c=sc.nextInt();
+try
+{
+if((a<b+c)&&(b<a+c)&&(c<a+b))
+System.out.println("Valid Triangle");
+else
+throw new Triangle();
+}
+catch(Triangle e)
+{
+System.out.println(e);
+}
+}
+}
+Q6
+
+class A
+{
+synchronized void displayTable(int n)
+{ try
+{
+for(int i=1;i<=10;i++)
+{
+System.out.println(i*n);
+Thread.sleep(1000);
+}
+}
+catch(Exception e)
+{
+}
+}
+}
+class Mul extends Thread
+{
+A a;int n;
+Mul(A a,int n)
+{ this.n=n;
+this.a=a;
+}
+public void run()
+{
+a.displayTable(n);
+}
+}
+public class Program5
+{
+public static void main(String args[])
+{
+A a=new A();
+Mul m=new Mul(a,8);
+Mul m1=new Mul(a,9);
+m.start();
+m1.start();
+}
+}
+
+Q7
+
+interface Calc{
+    public int res(int x,int y);
+   }
+   public class Program6{
+    public static void main(String args[])
+    {
+    Calc a=(x,y)->(x+y);
+    System.out.println("\nSUM IS:"+a.res(2,3));
+    Calc m=(x,y)->(x*y);
+    System.out.println("\nPRODUCT IS:"+m.res(3,4));
+    }
+   }
+
+   Q8
+
+   import java.util.*;
+public class Program7
+{
+public static void main(String args[])
+{
+Scanner sc=new Scanner(System.in);
+String s;
+System.out.println("Enter string");
+s=sc.nextLine();
+int c=0;
+char ch=s.charAt(0);
+for(int i=1;i<s.length();i++)
+{
+if(s.charAt(i)==ch)
+c++;
+ch=s.charAt(i);
+}
+System.out.println(c);
+}
+}
+   
